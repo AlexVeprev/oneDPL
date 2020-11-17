@@ -21,7 +21,6 @@ jobs:
 
     - name: Build
       run: make -j4 VERBOSE=1 build-all
-      
+
     - name: Run
       run: ctest --output-on-failure
-      
