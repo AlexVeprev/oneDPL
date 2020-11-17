@@ -14,18 +14,10 @@ jobs:
       run: sudo apt-get install -yqq g++ cmake make tar wget
  
     - name: Get oneTBB
+      run: wget https://github.com/oneapi-src/oneTBB/releases/download/v2021.1-beta10/oneapi-tbb-2021.1-beta10-lin.tgz && tar xaf oneapi-tbb-2021.1-beta10-lin.tgz
+
+    - name: Configure, build and test
       run: |
-        wget https://github.com/oneapi-src/oneTBB/releases/download/v2021.1-beta10/oneapi-tbb-2021.1-beta10-lin.tgz && tar xaf oneapi-tbb-2021.1-beta10-lin.tgz
-        ls
-        echo ${GITHUB_WORKSPACE}
-        ls ${GITHUB_WORKSPACE}
-        ls ${GITHUB_WORKSPACE}/oneapi-tbb-2021.1-beta10
-
-    - name: Configure
-      run: mkdir build && cd build && cmake -DTBB_DIR=${GITHUB_WORKSPACE}/oneapi-tbb-2021.1-beta10/lib/intel64/cmake/TBB ..
-
-    - name: Build
-      run: make -j4 VERBOSE=1 build-all
-
-    - name: Run
-      run: ctest --output-on-failure
+        mkdir build && cd build && cmake -DTBB_DIR=${GITHUB_WORKSPACE}/oneapi-tbb-2021.1-beta10/lib/intel64/cmake/TBB ..
+        make -j4 VERBOSE=1 build-all
+        ctest --output-on-failure
