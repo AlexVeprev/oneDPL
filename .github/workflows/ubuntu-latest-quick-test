@@ -1,6 +1,8 @@
 name: Quick test on ubuntu-latest
 
-on: push
+push:
+  branches:
+    - dev-cmake-infra
 
 jobs:
   build:
