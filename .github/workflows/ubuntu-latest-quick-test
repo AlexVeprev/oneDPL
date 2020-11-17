@@ -1,0 +1,30 @@
+name: Quick test on ubuntu-latest
+
+on:
+  pull_request:
+    branches:
+      - release_oneDPL
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 1
+
+    - name: Get tools
+      run: sudo apt-get install -yqq g++ cmake make tar wget
+ 
+    - name: Get oneTBB
+      run: wget https://github.com/oneapi-src/oneTBB/releases/download/v2021.1-beta10/oneapi-tbb-2021.1-beta10-lin.tgz && tar xaf oneapi-tbb-2021.1-beta10-lin.tgz
+
+    - name: Configure
+      run: mkdir build && cd build && cmake -DCMAKE_PREFIX_PATH=${GITHUB_WORKSPACE}/oneapi-tbb-2021.1-beta10 ..
+
+    - name: Build
+      run: make -j4 VERBOSE=1 build-all
+      
+    - name: Run
+      run: ctest --output-on-failure
+      
