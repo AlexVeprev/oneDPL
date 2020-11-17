@@ -22,7 +22,7 @@ jobs:
         ls ${GITHUB_WORKSPACE}/oneapi-tbb-2021.1-beta10
 
     - name: Configure
-      run: mkdir build && cd build && cmake -DCMAKE_PREFIX_PATH=${GITHUB_WORKSPACE}/oneapi-tbb-2021.1-beta10 ..
+      run: mkdir build && cd build && cmake -DTBB_DIR=${GITHUB_WORKSPACE}/oneapi-tbb-2021.1-beta10/lib/intel64/cmake/TBB ..
 
     - name: Build
       run: make -j4 VERBOSE=1 build-all
