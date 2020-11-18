@@ -19,5 +19,4 @@ jobs:
     - name: Configure, build and test
       run: |
         mkdir build && cd build && cmake -DTBB_DIR=${GITHUB_WORKSPACE}/oneapi-tbb-2021.1-beta10/lib/intel64/cmake/TBB ..
-        make -j4 VERBOSE=1 build-all
-        ctest --output-on-failure
+        make -j4 VERBOSE=1 run-pstl_testsuite
